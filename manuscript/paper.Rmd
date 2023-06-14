@@ -49,22 +49,70 @@ library(Lahman)
 \newpage
 
 # Introduction {#sec:intro}
-SIR models are commonly used as a simple model for epidemics.  
+SIR models (@weiss2013sir) are commonly used as a simple model for epidemics.  
+
+Covid: @ellison2020implications, @cooper2020sir, @kudryashov2021analytical
+
+Measles: @bjornstad2002dynamics, @arsal2020short, @allen1991discrete
+
+
 SIR Lit review
 
 ## Zombies
+Many 
 
+@reehl2013zombie, @simeonov2022humans, @witkowski2013bayesian, @libal2023transition, @alemi2015you
 
 # Methods {#sec:methods}
 These models can be expressed as differential equations with the solution describing the trajectories of the susceptible-infected-recovered groups.  The traditional SIR model is described by the following differential equations: 
 
 $$
 \frac{dS}{dt} = \frac{-\beta SI}{N}\\
+$$
+$$
 \frac{dI}{dt} = \frac{\beta SI}{N} - \gamma I\\
+$$
+$$
 \frac{dR}{dt} = \gamma I
 $$
 
 with $S$, $I$, and $R$ representing the number of sick, infected, and recovered individuals, $N$ is the total number of people in the system such that $S + I + R = N$ and $\gamma$ and $\beta$ are the rates (?) of recovery and infection, respectively.  
+
+## Heteronormative SIR model for cooties
+$$
+\frac{dS_g}{dt} = \frac{-\beta_g S_g I_b}{N_b}
+$$
+$$
+\frac{dI_g}{dt} = \frac{\beta_g S_g I_b}{N_b} - \gamma_g I_g\\
+$$
+$$
+\frac{dR_g}{dt} = \gamma_g I_g
+$$
+$$
+\frac{dS_b}{dt} = \frac{-\beta_b S_b I_g}{N_g}\\
+$$
+$$
+\frac{dI_b}{dt} = \frac{\beta_b S_b I_g}{N_g} - \gamma_b I_b\\
+$$
+$$
+\frac{dR_b}{dt} = \gamma_b I_b
+$$
+
+with $S_g$, $I_g$, and $R_g$ representing the number of sick, infected, and recovered girls and $S_b$, $I_b$, and $R_b$ representing the number of sick, infected, and recovered boys.  $N_g = S_g + I_g + R_g$ is the total number of girls, $N_b = S_b + I_b + R_b$ is the total number of boys, and $N = N_b + N_g$ is the total number of boys and girls in the population.  $\beta_g$ and $\beta_b$ are the infection rate(is it a rate?) for girls and boys, respectively.  Finally, $\gamma_g$ and $\gamma_b$ are the racovery rate(is it a rate?) for girls and boys, respectively. 
+
+
+In the special case where $\beta_g = \beta_b$ and $\gamma_g = \gamma_b$, What happens.......
+
+Proof: Is this even true?  Would be cool to have a proof!
+
+$$
+\frac{dS}{dt} = \frac{dS_g}{dt} + \frac{dS_b}{dt}
+$$
+
+$$
+= \frac{-\beta S_g I_b}{N_b} + \frac{-\beta S_b I_g}{N_g} = -\beta\left(\frac{S_g I_b}{N_b} + \frac{S_b I_g}{N_g}\right)
+$$
+
 
 # Results {#sec:results}
 

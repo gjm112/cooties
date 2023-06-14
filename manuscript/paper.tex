@@ -104,8 +104,8 @@
 \begin{document}
 \maketitle
 \begin{abstract}
-Baseball is some weird and wild shit. \vspace{2mm}\\
-\emph{Keywords}: change point analysis, baseball,
+Cooties. \vspace{2mm}\\
+\emph{Keywords}: Cooties
 \end{abstract}
 
 \newpage
@@ -113,39 +113,81 @@ Baseball is some weird and wild shit. \vspace{2mm}\\
 \hypertarget{sec:intro}{%
 \section{Introduction}\label{sec:intro}}
 
-Fighting in the National Hockey League (NHL) has been an integral part
-of the sport since the earliest days of the league. {[}Explain the role
-of fighting in hockey{]}. This has led to the rise of teams carrying so
-called ``enforcers'' of their rosters. An enforcer is a player who,
-along with being a regular player, is tasked with fighting players on
-the opposing team who have broken one of the unwritten rules of hockey.
-While any player on a hockey team can get into a fight, enforcers are
-exposed to many more fights than your everyday average NHL player. As a
-result of being exposed to these fights, they are experience additional
-head trauma, above and beyond the normal head trauma associated with
-hockey, from being punched in the head during these fights.\\
-Popkin et al. (\protect\hyperlink{ref-Popkin2023}{2023}) explored the
-effects of being an enforcer, defined by either number of careers fights
-or number of career penalty minutes, on mortality. They use a matched
-cohort study design and identity no significant difference in the
-mortality rates between enforcers and controls (i.e.~non-enforcers).
-While they find no difference in mortality rates, they do estimate that
-``being an enforcer was associated with dying approximately 10 years
-earlier and more frequently of suicide and drug overdose.''
+SIR models (Weiss (\protect\hyperlink{ref-weiss2013sir}{2013})) are
+commonly used as a simple model for epidemics.
 
-If true, this is truly an alarming finding. However, upon examining
-their statistical methods and attempting to reproduce their results
-using a survival analysis approach, which we believe is more
-appropriate, we were unable to reach the same conclusions as Popkin et
-al. (\protect\hyperlink{ref-Popkin2023}{2023}).
+Covid: Ellison (\protect\hyperlink{ref-ellison2020implications}{2020}),
+Cooper, Mondal, and Antonopoulos
+(\protect\hyperlink{ref-cooper2020sir}{2020}), Kudryashov, Chmykhov, and
+Vigdorowitsch (\protect\hyperlink{ref-kudryashov2021analytical}{2021})
 
-Interesting paper: Don't do PS matching:
-\url{https://gking.harvard.edu/publications/why-propensity-scores-should-not-be-used-formatching}
+Measles: Bjørnstad, Finkenstädt, and Grenfell
+(\protect\hyperlink{ref-bjornstad2002dynamics}{2002}), Arsal, Aldila,
+and Handari (\protect\hyperlink{ref-arsal2020short}{2020}), Allen,
+Jones, and Martin (\protect\hyperlink{ref-allen1991discrete}{1991})
+
+SIR Lit review
+
+\hypertarget{zombies}{%
+\subsection{Zombies}\label{zombies}}
+
+Many
+
+Reehl (\protect\hyperlink{ref-reehl2013zombie}{2013}), Simeonov et al.
+(\protect\hyperlink{ref-simeonov2022humans}{2022}), Witkowski and Blais
+(\protect\hyperlink{ref-witkowski2013bayesian}{2013}), Libál et al.
+(\protect\hyperlink{ref-libal2023transition}{2023}), Alemi et al.
+(\protect\hyperlink{ref-alemi2015you}{2015})
 
 \hypertarget{sec:methods}{%
 \section{Methods}\label{sec:methods}}
 
-Popkin et al. (\protect\hyperlink{ref-Popkin2023}{2023})
+These models can be expressed as differential equations with the
+solution describing the trajectories of the
+susceptible-infected-recovered groups. The traditional SIR model is
+described by the following differential equations:
+
+\[
+\frac{dS}{dt} = \frac{-\beta SI}{N}\\
+\] \[
+\frac{dI}{dt} = \frac{\beta SI}{N} - \gamma I\\
+\] \[
+\frac{dR}{dt} = \gamma I
+\]
+
+with \(S\), \(I\), and \(R\) representing the number of sick, infected,
+and recovered individuals, \(N\) is the total number of people in the
+system such that \(S + I + R = N\) and \(\gamma\) and \(\beta\) are the
+rates (?) of recovery and infection, respectively.
+
+\hypertarget{heteronormative-sir-model-for-cooties}{%
+\subsection{Heteronormative SIR model for
+cooties}\label{heteronormative-sir-model-for-cooties}}
+
+\[
+\frac{dS_g}{dt} = \frac{-\beta_g S_g I_b}{N_b}
+\] \[
+\frac{dI_g}{dt} = \frac{\beta_g S_g I_b}{N_b} - \gamma_g I_g\\
+\] \[
+\frac{dR_g}{dt} = \gamma_g I_g
+\] \[
+\frac{dS_b}{dt} = \frac{-\beta_b S_b I_g}{N_g}\\
+\] \[
+\frac{dI_b}{dt} = \frac{\beta_b S_b I_g}{N_g} - \gamma_b I_b\\
+\] \[
+\frac{dR_b}{dt} = \gamma_b I_b
+\]
+
+with \(S_g\), \(I_g\), and \(R_g\) representing the number of sick,
+infected, and recovered girls and \(S_b\), \(I_b\), and \(R_b\)
+representing the number of sick, infected, and recovered boys.
+\(N_g = S_g + I_g + R_g\) is the total number of girls,
+\(N_b = S_b + I_b + R_b\) is the total number of boys, and
+\(N = N_b + N_g\) is the total number of boys and girls in the
+population. \(\beta_g\) and \(\beta_b\) are the infection rate(is it a
+rate?) for girls and boys, respectively. Finally, \(\gamma_g\) and
+\(\gamma_b\) are the racovery rate(is it a rate?) for girls and boys,
+respectively.
 
 \hypertarget{sec:results}{%
 \section{Results}\label{sec:results}}
@@ -170,12 +212,66 @@ available at \url{https://github.com/gjm112/HockeyEnforcers}
 
 \hypertarget{refs}{}
 \begin{CSLReferences}{1}{0}
-\leavevmode\vadjust pre{\hypertarget{ref-Popkin2023}{}}%
-Popkin, Charles A., Cole R. Morrissette, Thomas A. Fortney, Kyle L.
-McCormick, Prakash Gorroochurn, and Michael J. Stuart. 2023. {``Fighting
-and Penalty Minutes Associated with Long-Term Mortality Among National
-Hockey League Players, 1967 to 2022.''} \emph{JAMA Network Open} 6 (5):
-e2311308--8.
+\leavevmode\vadjust pre{\hypertarget{ref-alemi2015you}{}}%
+Alemi, Alexander A, Matthew Bierbaum, Christopher R Myers, and James P
+Sethna. 2015. {``You Can Run, You Can Hide: The Epidemiology and
+Statistical Mechanics of Zombies.''} \emph{Physical Review E} 92 (5):
+052801.
+
+\leavevmode\vadjust pre{\hypertarget{ref-allen1991discrete}{}}%
+Allen, LJS, MA Jones, and CF Martin. 1991. {``A Discrete-Time Model with
+Vaccination for a Measles Epidemic.''} \emph{Mathematical Biosciences}
+105 (1): 111--31.
+
+\leavevmode\vadjust pre{\hypertarget{ref-arsal2020short}{}}%
+Arsal, Shinta R, Dipo Aldila, and Bevina D Handari. 2020. {``Short
+Review of Mathematical Model of Measles.''} In \emph{AIP Conference
+Proceedings}, 2264:020003. 1. AIP Publishing LLC.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bjornstad2002dynamics}{}}%
+Bjørnstad, Ottar N, Bärbel F Finkenstädt, and Bryan T Grenfell. 2002.
+{``Dynamics of Measles Epidemics: Estimating Scaling of Transmission
+Rates Using a Time Series SIR Model.''} \emph{Ecological Monographs} 72
+(2): 169--84.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cooper2020sir}{}}%
+Cooper, Ian, Argha Mondal, and Chris G Antonopoulos. 2020. {``A SIR
+Model Assumption for the Spread of COVID-19 in Different Communities.''}
+\emph{Chaos, Solitons \& Fractals} 139: 110057.
+
+\leavevmode\vadjust pre{\hypertarget{ref-ellison2020implications}{}}%
+Ellison, Glenn. 2020. {``Implications of Heterogeneous SIR Models for
+Analyses of COVID-19.''} National Bureau of Economic Research.
+
+\leavevmode\vadjust pre{\hypertarget{ref-kudryashov2021analytical}{}}%
+Kudryashov, Nikolay A, Mikhail A Chmykhov, and Michael Vigdorowitsch.
+2021. {``Analytical Features of the SIR Model and Their Applications to
+COVID-19.''} \emph{Applied Mathematical Modelling} 90: 466--73.
+
+\leavevmode\vadjust pre{\hypertarget{ref-libal2023transition}{}}%
+Libál, A, P Forgács, Á Néda, C Reichhardt, N Hengartner, and CJO
+Reichhardt. 2023. {``Transition from Susceptible-Infected to
+Susceptible-Infected-Recovered Dynamics in a
+Susceptible-Cleric-Zombie-Recovered Active Matter Model.''}
+\emph{Physical Review E} 107 (2): 024604.
+
+\leavevmode\vadjust pre{\hypertarget{ref-reehl2013zombie}{}}%
+Reehl, Sarah. 2013. {``Zombie Fever: Forecasting an Undead Epidemic.''}
+PhD thesis.
+
+\leavevmode\vadjust pre{\hypertarget{ref-simeonov2022humans}{}}%
+Simeonov, Ognyan, Kari Lemelin Fliss, Jennifer Driscoll, and Carrie Diaz
+Eaton. 2022. {``Humans Vs. Zombies: Data-Driven Modeling of Disease
+Spread.''} \emph{Spora: A Journal of Biomathematics} 8 (1): 72--84.
+
+\leavevmode\vadjust pre{\hypertarget{ref-weiss2013sir}{}}%
+Weiss, Howard Howie. 2013. {``The SIR Model and the Foundations of
+Public Health.''} \emph{Materials Matematics}, 0001--17.
+
+\leavevmode\vadjust pre{\hypertarget{ref-witkowski2013bayesian}{}}%
+Witkowski, Caitlyn, and Brian Blais. 2013. {``Bayesian Analysis of
+Epidemics-Zombies, Influenza, and Other Diseases.''} \emph{arXiv
+Preprint arXiv:1311.6376}.
 
 \end{CSLReferences}
 
