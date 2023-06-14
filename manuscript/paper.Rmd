@@ -1,0 +1,79 @@
+---
+title: |
+  |  \Large SIR cooties
+author: | 
+  | \large Gregory J. Matthews \vspace{-1.1mm}
+  | \normalsize Department of Mathematics and Statistics \vspace{-1mm}
+  | \normalsize Center for Data Science and Consulting \vspace{-1mm}
+  | \normalsize Loyola University Chicago \vspace{-1mm}
+  | \normalsize Chicago, IL 60660 \vspace{-1mm}
+  | \normalsize [`gmatthews1@luc.edu`](mailto:gmatthews1@luc.edu) \vspace{-1mm}
+abstract: |
+  | Cooties. \vspace{2mm}
+  | *Keywords*: Cooties
+bibliography: references.bib
+fontsize: 12pt
+link-citations: true
+linkcolor: cyan
+urlcolor: cyan
+output:
+  pdf_document:
+    df_print: kable
+    number_sections: true
+    keep_tex: true
+header-includes:
+ \usepackage{setspace}
+ \setstretch{1.15}
+ \usepackage{float}
+ \floatplacement{figure}{t}
+---
+
+```{r setup, echo=FALSE, message=FALSE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	fig.align = "center",
+	message = FALSE,
+	warning = FALSE
+)
+
+gjm <- function(x, color = "red") {
+  sprintf("\\textcolor{%s}{%s}", color, x)}
+```
+
+```{r pkgs}
+library(tidyverse)
+theme_set(theme_minimal())
+library(Lahman)
+```
+
+\newpage
+
+# Introduction {#sec:intro}
+SIR models are commonly used as a simple model for epidemics.  
+SIR Lit review
+
+## Zombies
+
+
+# Methods {#sec:methods}
+These models can be expressed as differential equations with the solution describing the trajectories of the susceptible-infected-recovered groups.  The traditional SIR model is described by the following differential equations: 
+
+$$
+\frac{dS}{dt} = \frac{-\beta SI}{N}\\
+\frac{dI}{dt} = \frac{\beta SI}{N} - \gamma I\\
+\frac{dR}{dt} = \gamma I
+$$
+
+with $S$, $I$, and $R$ representing the number of sick, infected, and recovered individuals, $N$ is the total number of people in the system such that $S + I + R = N$ and $\gamma$ and $\beta$ are the rates (?) of recovery and infection, respectively.  
+
+# Results {#sec:results}
+
+# Conclusion {#sec:conclusion}
+
+# Acknowledgements {-}
+
+# Supplementary Material {-}
+
+All code for reproducing the analyses in this paper is publicly available at https://github.com/gjm112/HockeyEnforcers
+
+# References

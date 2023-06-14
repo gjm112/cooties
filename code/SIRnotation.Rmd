@@ -1,0 +1,42 @@
+---
+title: "Untitled"
+author: "Gregory J. Matthews"
+date: "6/2/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+$$
+\frac{dS_g}{dt} = \frac{-\beta S_g I_b}{N_b}\\
+\frac{dI_g}{dt} = \frac{\beta S_g I_b}{N_b} - \gamma I_g\\
+\frac{dR_g}{dt} = \gamma I_g
+$$
+
+$$
+\frac{dS_b}{dt} = \frac{-\beta S_b I_g}{N_g}\\
+\frac{dI_b}{dt} = \frac{\beta S_b I_g}{N_g} - \gamma I_b\\
+\frac{dR_b}{dt} = \gamma I_b
+$$
+
+$$
+\frac{dS}{dt} = \frac{-\beta S I}{N}\\
+\frac{dI}{dt} = \frac{\beta S I}{N} - \gamma I\\
+\frac{dR}{dt} = \gamma I
+$$
+
+
+$$
+\frac{dS_g}{dt} = -\beta\left(\frac{ S_g^b I_b}{N_b} + \frac{S_g^g I_g}{N_g} + \frac{S_g^{gb} (I_b+I_g)}{(N_b + N_g)}\right)\\
+\frac{dI_g}{dt} = \beta\left(\frac{ S_g^b I_b}{N_b} + \frac{ S_g^g I_g}{N_g} + \frac{S_g^{gb} (I_b+I_g)}{(N_b + N_g)}\right) - \gamma I_g\\
+\frac{dR_g}{dt} = \gamma I_g
+$$
+
+
+$$
+\frac{dS_b}{dt} = -\beta\left(\frac{ S_b^g I_g}{N_g} + \frac{S_b^b I_b}{N_b} + \frac{S_b^{gb} (I_b+I_g)}{(N_b + N_g)}\right)\\
+\frac{dI_b}{dt} = \beta\left(\frac{ S_b^g I_g}{N_g} + \frac{S_b^b I_b}{N_b} + \frac{S_b^{gb} (I_b+I_g)}{(N_b + N_g)}\right) - \gamma I_g\\
+\frac{dR_b}{dt} = \gamma I_g
+$$
