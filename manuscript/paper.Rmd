@@ -85,6 +85,7 @@ $$
 $$
 \frac{dI_g}{dt} = \frac{\beta_g S_g I_b}{N_b} - \gamma_g I_g\\
 $$
+
 $$
 \frac{dR_g}{dt} = \gamma_g I_g
 $$
@@ -103,6 +104,20 @@ with $S_g$, $I_g$, and $R_g$ representing the number of sick, infected, and reco
 
 In the special case where $\beta_g = \beta_b$ and $\gamma_g = \gamma_b$, What happens.......
 
+In some scribbling, I have that the models are equivalent if 
+$$
+(S_gN_g -S_bN_b)(I_bN_g - I_gN_b) = 0
+$$
+So if either of these are true: 
+This first one is the infected ratio.  
+$$
+\frac{I_b}{N_b} = \frac{I_g}{N_g} 
+$$
+or (I don't think thi second one makes sense) 
+$$
+\frac{S_b}{N_g} = \frac{S_g}{N_b} 
+$$
+
 Proof: Is this even true?  Would be cool to have a proof!
 
 $$
@@ -113,8 +128,269 @@ $$
 = \frac{-\beta S_g I_b}{N_b} + \frac{-\beta S_b I_g}{N_g} = -\beta\left(\frac{S_g I_b}{N_b} + \frac{S_b I_g}{N_g}\right)
 $$
 
+```{r}
+Sg <- 100
+Sb <- 50
+Ib <- 3
+Ig <- 3
+Nb <- Sb + Ib
+Ng <- Sg + Ig
+
+(Sg + Sb)*(Ig+Ib)/ (Nb+Ng)
+
+Sg*Ib/Nb + Sb*Ig/Ng
+```
+
 
 # Results {#sec:results}
+Balanced
+```{r}
+Sb <- 150
+Sg <- 150
+Ib <- 1
+Ig <- 1
+Rb <- 0
+Rg <- 0
+
+library(deSolve)
+closed.sir.model <- function (t, x, params) {
+  ## first extract the state variables
+  S <- x[1]
+  I <- x[2]
+  R <- x[3]
+  ## now extract the parameters
+  beta <- params["beta"]
+  gamma <- params["gamma"]
+  N <- S+I+R
+  ## now code the model equations
+  dSdt <- -beta*S*I/N
+  dIdt <- beta*S*I/N-gamma*I
+  dRdt <- gamma*I
+  ## combine results into a single vector
+  dxdt <- c(dSdt,dIdt,dRdt)
+  ## return result as a list!
+  list(dxdt)
+}
+
+
+parms <- c(beta=0.25,gamma=1/60)
+times <- seq(from=0,to=180,by=1)
+xstart <- c(S=Sg+Sb,I=Ib+Ig,R=Rb+Rg)
+
+
+library(tidyverse)
+ode(
+  func=closed.sir.model,
+  y=xstart,
+  times=times,
+  parms=parms
+) %>%
+  as.data.frame() -> out1
+
+
+
+#out1 %>%
+  # gather(variable,value,-time) %>%
+  # ggplot(aes(x=time,y=value,color=variable))+
+  # geom_line(size=2)+
+  # theme_classic()+
+  # labs(x='time (days)',y='number of individuals')
+```
+
+This model has infections peaking on day `r which.max(out1$I)`.  
+Same starting conditions but balanced between the two groups.  
+```{r}
+#Now for cooties with recoveries
+closed.sir.model <- function (t, x, params) {
+  ## first extract the state variables
+  Sg <- x[1]
+  Sb <- x[2]
+  Ig <- x[3]
+  Ib <- x[4]
+  Rg <- x[3]
+  Rb <- x[4]
+  ## now extract the parameters
+  beta <- params["beta"]
+  gamma <- params["gamma"]
+  Nb <- Sb+Ib + Rb
+  Ng <- Sb+Ig + Rg
+  ## now code the model equations
+  dSgdt <- -beta*Sg*Ib/Nb
+  dSbdt <- -beta*Sb*Ig/Ng
+  dIgdt <- beta*Sg*Ib/Nb - gamma*Ig
+  dIbdt <- beta*Sb*Ig/Ng - gamma*Ib
+  dRgdt <- gamma*Ig
+  dRbdt <- gamma*Ib
+  ## combine results into a single vector
+  dxdt <- c(dSgdt,dSbdt,dIgdt,dIbdt,dRgdt,dRbdt)
+  ## return result as a list!
+  list(dxdt)
+}
+
+
+parms <- c(beta=0.25,gamma=1/60)
+times <- seq(from=0,to=180,by=1)
+xstart <- c(Sg=Sg, Sb=Sb,Ig=Ig, Ib = Ib, Rg = Rg, Rb=Rb)
+
+library(tidyverse)
+ode(
+  func=closed.sir.model,
+  y=xstart,
+  times=times,
+  parms=parms
+) %>%
+  as.data.frame() -> out
+
+
+out <- out %>% mutate(S = Sg + Sb, I = Ib+Ig, R = Rb+Rg)
+
+
+
+# out %>%
+#   select(S, I, R, time) %>% 
+#   gather(variable,value,-time) %>%
+#   ggplot(aes(x=time,y=value,color=variable))+
+#   geom_line(size=2)+
+#   theme_classic()+
+#   labs(x='time (days)',y='number of individuals') 
+
+dat1 <- out1 %>% gather(variable,value,-time)
+#Cooties model
+dat <- out %>%select(S, I, R, time) %>% gather(variable,value,-time)
+
+  ggplot()+
+  geom_line(aes(x=time,y=value,color=variable), data = dat1,size=1, lty = 2)+  geom_line(aes(x=time,y=value,color=variable), data = dat ,size=1) + 
+  theme_classic()+
+  labs(x='time (days)',y='number of individuals')
+
+```
+
+
+```{r}
+Sb <- 200
+Sg <- 50
+Ib <- 1
+Ig <- 0
+Rb <- 0
+Rg <- 0
+
+library(deSolve)
+closed.sir.model <- function (t, x, params) {
+  ## first extract the state variables
+  S <- x[1]
+  I <- x[2]
+  R <- x[3]
+  ## now extract the parameters
+  beta <- params["beta"]
+  gamma <- params["gamma"]
+  N <- S+I+R
+  ## now code the model equations
+  dSdt <- -beta*S*I/N
+  dIdt <- beta*S*I/N-gamma*I
+  dRdt <- gamma*I
+  ## combine results into a single vector
+  dxdt <- c(dSdt,dIdt,dRdt)
+  ## return result as a list!
+  list(dxdt)
+}
+
+
+parms <- c(beta=0.25,gamma=1/60)
+times <- seq(from=0,to=180,by=1)
+xstart <- c(S=Sg+Sb,I=Ib+Ig,R=Rb+Rg)
+
+
+library(tidyverse)
+ode(
+  func=closed.sir.model,
+  y=xstart,
+  times=times,
+  parms=parms
+) %>%
+  as.data.frame() -> out1
+
+
+
+#out1 %>%
+  # gather(variable,value,-time) %>%
+  # ggplot(aes(x=time,y=value,color=variable))+
+  # geom_line(size=2)+
+  # theme_classic()+
+  # labs(x='time (days)',y='number of individuals')
+```
+
+This model has infections peaking on day `r which.max(out1$I)`.  
+Same starting conditions but balanced between the two groups.  
+```{r}
+#Now for cooties with recoveries
+closed.sir.model <- function (t, x, params) {
+  ## first extract the state variables
+  Sg <- x[1]
+  Sb <- x[2]
+  Ig <- x[3]
+  Ib <- x[4]
+  Rg <- x[3]
+  Rb <- x[4]
+  ## now extract the parameters
+  beta <- params["beta"]
+  gamma <- params["gamma"]
+  Nb <- Sb+Ib + Rb
+  Ng <- Sb+Ig + Rg
+  ## now code the model equations
+  dSgdt <- -beta*Sg*Ib/Nb
+  dSbdt <- -beta*Sb*Ig/Ng
+  dIgdt <- beta*Sg*Ib/Nb - gamma*Ig
+  dIbdt <- beta*Sb*Ig/Ng - gamma*Ib
+  dRgdt <- gamma*Ig
+  dRbdt <- gamma*Ib
+  ## combine results into a single vector
+  dxdt <- c(dSgdt,dSbdt,dIgdt,dIbdt,dRgdt,dRbdt)
+  ## return result as a list!
+  list(dxdt)
+}
+
+
+parms <- c(beta=0.25,gamma=1/60)
+times <- seq(from=0,to=180,by=1)
+xstart <- c(Sg=Sg, Sb=Sb,Ig=Ig, Ib = Ib, Rg = Rg, Rb=Rb)
+
+library(tidyverse)
+ode(
+  func=closed.sir.model,
+  y=xstart,
+  times=times,
+  parms=parms
+) %>%
+  as.data.frame() -> out
+
+
+out <- out %>% mutate(S = Sg + Sb, I = Ib+Ig, R = Rb+Rg)
+
+
+
+# out %>%
+#   select(S, I, R, time) %>% 
+#   gather(variable,value,-time) %>%
+#   ggplot(aes(x=time,y=value,color=variable))+
+#   geom_line(size=2)+
+#   theme_classic()+
+#   labs(x='time (days)',y='number of individuals') 
+
+dat1 <- out1 %>% gather(variable,value,-time)
+#Cooties model
+dat <- out %>%select(S, I, R, time) %>% gather(variable,value,-time)
+
+  ggplot()+
+  geom_line(aes(x=time,y=value,color=variable), data = dat1,size=1, lty = 2)+  geom_line(aes(x=time,y=value,color=variable), data = dat ,size=1) + 
+  theme_classic()+
+  labs(x='time (days)',y='number of individuals')
+
+```
+
+
+
+
+Because at any given time point only part of the population can infect the other part of the population, the overall infected rate grows slower than the the SIR model where everyone is capable of infecting everyone else.  
 
 # Conclusion {#sec:conclusion}
 

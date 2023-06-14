@@ -124,7 +124,7 @@ closed.sir.model <- function (t, x, params) {
 
 parms <- c(beta=0.25,gamma=1/60)
 times <- seq(from=0,to=180,by=1)
-xstart <- c(Sg=50, Sb=49,Ig=0, Ib = 1, Rg = 0, Rb=0)
+xstart <- c(Sg=50, Sb=49,Ig=, Ib = 1, Rg = 0, Rb=0)
 
 library(tidyverse)
 ode(
